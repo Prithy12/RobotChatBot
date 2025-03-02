@@ -1,0 +1,6 @@
+@echo off
+echo Running API Key Cleaner...
+node clean-api-keys.js
+echo.
+echo Press any key to exit...
+pause > nul
