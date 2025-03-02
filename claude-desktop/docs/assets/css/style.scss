@@ -3,16 +3,14 @@
 
 @import "{{ site.theme }}";
 
-// Custom styles can be added below
+// Custom styles for Claude Desktop site
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   line-height: 1.6;
 }
 
-.container {
+.container-lg {
   max-width: 960px;
-  margin: 0 auto;
-  padding: 2rem 1rem;
 }
 
 .download-buttons {
@@ -27,7 +25,7 @@ body {
   padding: 0.75rem 1.5rem;
   border-radius: 4px;
   background-color: #0366d6;
-  color: white;
+  color: white !important;
   text-decoration: none;
   font-weight: 600;
   transition: background-color 0.2s;
@@ -38,6 +36,7 @@ body {
   text-decoration: none;
 }
 
+// Dark mode support
 @media (prefers-color-scheme: dark) {
   body {
     background-color: #0d1117;
@@ -58,5 +57,22 @@ body {
   
   .btn:hover {
     background-color: #2ea043;
+  }
+
+  .markdown-body h1,
+  .markdown-body h2,
+  .markdown-body h3,
+  .markdown-body h4,
+  .markdown-body h5,
+  .markdown-body h6 {
+    color: #e6edf3;
+  }
+
+  .markdown-body pre {
+    background-color: #161b22;
+  }
+
+  .markdown-body code {
+    background-color: rgba(240, 246, 252, 0.15);
   }
 }

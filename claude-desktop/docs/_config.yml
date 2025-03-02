@@ -6,3 +6,5 @@ url: "https://Prithy12.github.io"
 github:
   is_project_page: true
   repository_url: https://github.com/Prithy12/RobotChatBot
+  zip_url: https://github.com/Prithy12/RobotChatBot/archive/refs/heads/main.zip
+  tar_url: https://github.com/Prithy12/RobotChatBot/archive/refs/heads/main.tar.gz

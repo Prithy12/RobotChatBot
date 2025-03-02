@@ -51,15 +51,19 @@ If you prefer to build from source:
    git clone https://github.com/Prithy12/RobotChatBot.git
    ```
 
-2. Install dependencies:
+2. Navigate to the claude-desktop directory:
    ```bash
-   cd RobotChatBot
+   cd RobotChatBot/claude-desktop
+   ```
+
+3. Install dependencies:
+   ```bash
    npm install
    ```
 
-3. Run the application:
+4. Run the application:
    ```bash
    npm start
    ```
 
-[Back to home](index.html)
+[Back to home](./)

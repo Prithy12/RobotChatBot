@@ -12,9 +12,9 @@ A desktop robot chatbot application powered by Claude AI.
 Choose your platform:
 
 <div class="download-buttons">
-  <a href="download.html#windows" class="btn">Windows</a>
-  <a href="download.html#macos" class="btn">macOS</a>
-  <a href="download.html#linux" class="btn">Linux</a>
+  <a href="download#windows" class="btn">Windows</a>
+  <a href="download#macos" class="btn">macOS</a>
+  <a href="download#linux" class="btn">Linux</a>
   <a href="https://github.com/Prithy12/RobotChatBot" class="btn">Source Code</a>
 </div>
 
@@ -33,4 +33,4 @@ Choose your platform:
 2. Follow the installation instructions
 3. Launch RobotChatBot and start chatting!
 
-[View detailed installation instructions](download.html)
+[View detailed installation instructions](download)
