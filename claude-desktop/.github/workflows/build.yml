@@ -100,13 +100,12 @@ jobs:
       - name: Commit download page and version file
         if: matrix.os == 'ubuntu-latest' && github.event.inputs.release_type == 'production'
         run: |
-          # Copy files to docs directory
-          cp download.html docs/download.html
-          cp version.json docs/version.json
+          # Copy files to docs directory - using markdown for Jekyll
+          cp version.json docs/
           cp -r assets/* docs/assets/ 2>/dev/null || :  # Copy assets if they exist
           
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add download.html version.json docs/download.html docs/version.json
+          git add download.html version.json docs/
           git commit -m "Update download page and version info for v${{ github.event.inputs.version }}"
           git push
