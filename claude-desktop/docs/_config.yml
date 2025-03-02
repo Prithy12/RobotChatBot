@@ -1,7 +1,7 @@
 theme: jekyll-theme-cayman
-title: Claude Desktop
-description: A cross-platform desktop chatbot application powered by Anthropic's Claude API
+title: RobotChatBot
+description: An AI-powered desktop assistant featuring Claude with an interactive robot interface
 show_downloads: true
 github:
-  zip_url: https://github.com/yourusername/claude-desktop/releases/latest
-  tar_url: https://github.com/yourusername/claude-desktop/releases/latest
+  zip_url: https://github.com/YourUsername/RobotChatBot/releases/latest
+  tar_url: https://github.com/YourUsername/RobotChatBot/releases/latest

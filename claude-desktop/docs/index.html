@@ -3,36 +3,313 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Claude Desktop - Download</title>
-    <meta http-equiv="refresh" content="0;url=download.html">
+    <title>RobotChatBot - AI-Powered Desktop Assistant</title>
     <style>
+        :root {
+            --primary-color: #8a7cff;
+            --primary-dark: #6c5ce7;
+            --accent-color: #00b894;
+            --text-color: #333;
+            --light-bg: #f8f9fa;
+            --dark-bg: #121212;
+            --dark-card: #1e1e1e;
+            --dark-text: #e0e0e0;
+        }
+        
         body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
             margin: 0;
-            background-color: #f5f7fa;
+            padding: 0;
+            color: var(--text-color);
         }
-        .message {
+        
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            padding: 3rem 1rem;
             text-align: center;
-            padding: 20px;
         }
-        a {
-            color: #8a7cff;
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        
+        .card h3 {
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 4px;
             text-decoration: none;
             font-weight: bold;
+            transition: background-color 0.3s;
         }
-        a:hover {
+        
+        .cta-button:hover {
+            background-color: #00a884;
+        }
+        
+        .download-section {
+            background-color: var(--light-bg);
+            padding: 3rem 1rem;
+            text-align: center;
+        }
+        
+        .download-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .download-button {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.75rem 1.5rem;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+        
+        .download-button:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .download-button img {
+            margin-right: 0.5rem;
+            width: 24px;
+            height: 24px;
+        }
+        
+        .features {
+            padding: 3rem 1rem;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+        }
+        
+        .feature-icon {
+            background-color: var(--primary-color);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            flex-shrink: 0;
+            font-size: 24px;
+        }
+        
+        footer {
+            background-color: var(--primary-dark);
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+        }
+        
+        footer a {
+            color: white;
             text-decoration: underline;
+        }
+        
+        .version-info {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #6c757d;
+            margin-top: 1rem;
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: var(--dark-bg);
+                color: var(--dark-text);
+            }
+            
+            .card {
+                background-color: var(--dark-card);
+                box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            }
+            
+            .download-section {
+                background-color: #1a1a1a;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="message">
-        <h1>Redirecting to Download Page...</h1>
-        <p>If you are not redirected automatically, <a href="download.html">click here</a>.</p>
+    <div class="hero">
+        <h1>RobotChatBot</h1>
+        <p>An AI-powered desktop assistant featuring Claude with an interactive robot interface</p>
+        <a href="download.html" class="cta-button">Download Now</a>
     </div>
+    
+    <div class="container">
+        <h2>Meet Your AI Assistant</h2>
+        <p>RobotChatBot combines the power of Claude's AI with a friendly robot interface for a unique desktop experience. Ask questions, get help with tasks, or just have a conversation with your new desktop companion.</p>
+        
+        <div class="card-grid">
+            <div class="card">
+                <h3>Animated Robot Face</h3>
+                <p>Interact with a responsive robot face that animates and changes expressions based on the conversation's sentiment.</p>
+            </div>
+            <div class="card">
+                <h3>Voice Capabilities</h3>
+                <p>Text-to-speech functionality allows your AI assistant to speak responses, creating a more immersive experience.</p>
+            </div>
+            <div class="card">
+                <h3>Advanced AI</h3>
+                <p>Powered by Claude's language model, providing intelligent responses to a wide range of queries and requests.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="download-section">
+        <h2>Download RobotChatBot</h2>
+        <p>Available for Windows, macOS, and Linux. Get started with your AI desktop companion today.</p>
+        
+        <div class="download-buttons">
+            <a href="https://github.com/YourUsername/RobotChatBot/releases/latest/download/Claude-Desktop-Setup-1.0.0.exe" class="download-button" id="windows-download" data-version="1.0.0">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Windows_logo_-_2012.svg" alt="Windows logo">
+                Windows
+            </a>
+            <a href="https://github.com/YourUsername/RobotChatBot/releases/latest/download/Claude-Desktop-1.0.0.dmg" class="download-button" id="mac-download" data-version="1.0.0">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple logo">
+                macOS
+            </a>
+            <a href="https://github.com/YourUsername/RobotChatBot/releases/latest/download/claude-desktop-1.0.0.AppImage" class="download-button" id="linux-download" data-version="1.0.0">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/3/35/Tux.svg" alt="Linux logo">
+                Linux
+            </a>
+        </div>
+        
+        <p class="version-info">Current version: 1.0.0</p>
+        <p><a href="download.html">View detailed download options</a></p>
+    </div>
+    
+    <div class="features container">
+        <h2>Key Features</h2>
+        
+        <div class="feature-item">
+            <div class="feature-icon">🖥️</div>
+            <div>
+                <h3>Cross-Platform</h3>
+                <p>Use RobotChatBot on Windows, macOS, or Linux with the same great experience.</p>
+            </div>
+        </div>
+        
+        <div class="feature-item">
+            <div class="feature-icon">🔒</div>
+            <div>
+                <h3>Secure API Key Storage</h3>
+                <p>Your API key is stored securely using your system's keychain with encrypted fallback.</p>
+            </div>
+        </div>
+        
+        <div class="feature-item">
+            <div class="feature-icon">🎭</div>
+            <div>
+                <h3>Expressive Robot Interface</h3>
+                <p>The robot face displays different expressions based on sentiment analysis of the conversation.</p>
+            </div>
+        </div>
+        
+        <div class="feature-item">
+            <div class="feature-icon">🔊</div>
+            <div>
+                <h3>Text-to-Speech</h3>
+                <p>Have responses read aloud with natural-sounding voice synthesis.</p>
+            </div>
+        </div>
+        
+        <div class="feature-item">
+            <div class="feature-icon">🌓</div>
+            <div>
+                <h3>Light & Dark Mode</h3>
+                <p>Choose between light and dark themes, or let the app follow your system preferences.</p>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2025 RobotChatBot. All rights reserved.</p>
+        <p>View the <a href="https://github.com/YourUsername/RobotChatBot">source code on GitHub</a></p>
+    </footer>
+    
+    <script>
+        // Detect the user's OS and highlight the appropriate download button
+        document.addEventListener('DOMContentLoaded', function() {
+            const platform = navigator.platform.toLowerCase();
+            
+            if (platform.includes('win')) {
+                document.getElementById('windows-download').style.backgroundColor = '#28a745';
+            } else if (platform.includes('mac')) {
+                document.getElementById('mac-download').style.backgroundColor = '#28a745';
+            } else if (platform.includes('linux')) {
+                document.getElementById('linux-download').style.backgroundColor = '#28a745';
+            }
+        });
+    </script>
 </body>
 </html>
