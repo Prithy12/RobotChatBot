@@ -6,5 +6,11 @@
     "windows": true,
     "mac": true,
     "linux": true
-  }
+  },
+  "files": {
+    "windows": "Claude-Desktop-Setup-1.0.0.exe",
+    "mac": "Claude-Desktop-1.0.0.dmg",
+    "linux": "claude-desktop-1.0.0.AppImage"
+  },
+  "downloadPage": "https://yourusername.github.io/claude-desktop/download.html"
 }

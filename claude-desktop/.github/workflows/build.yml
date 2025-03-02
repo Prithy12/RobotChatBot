@@ -1,12 +1,20 @@
 name: Build and Release
 
 on:
-  push:
-    # Build on specific branches
-    branches: [main, dev, prod]
-    # Build on published releases
-    tags:
-      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version number (e.g., 1.0.1)'
+        required: true
+        default: ''
+      release_type:
+        description: 'Release type'
+        required: true
+        default: 'production'
+        type: choice
+        options:
+          - production
+          - development
 
 jobs:
   release:
@@ -14,7 +22,7 @@ jobs:
     
     strategy:
       matrix:
-        os: [windows-latest]  # You can add macos-latest and ubuntu-latest if needed
+        os: [windows-latest, macos-latest, ubuntu-latest]
     
     steps:
       - name: Check out Git repository
@@ -26,23 +34,74 @@ jobs:
           node-version: 16
           cache: 'npm'
       
+      - name: Update version in package.json
+        run: |
+          npm version ${{ github.event.inputs.version }} --no-git-tag-version
+      
       - name: Install dependencies
         run: npm install
       
-      - name: Build Webpack
-        run: npm run build
+      - name: Build Production Package
+        if: ${{ github.event.inputs.release_type == 'production' }}
+        run: npm run package-prod
       
-      - name: Build/release Electron app
-        uses: samuelmeuli/action-electron-builder@v1
+      - name: Build Development Package
+        if: ${{ github.event.inputs.release_type == 'development' }}
+        run: npm run package-dev
+      
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          # GitHub token, automatically provided to the action
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          
-          # If the commit is tagged with a version (e.g. "v1.0.0"),
-          # release the app after building
-          release: ${{ startsWith(github.ref, 'refs/tags/v') }}
-          
-          # Use this if building for specific branch
-          args: |
-            ${{ github.ref == 'refs/heads/dev' && '--config.productName="Claude Desktop Dev"' || '' }}
-            ${{ github.ref == 'refs/heads/prod' && '--config.productName="Claude Desktop Prod"' || '' }}
+          tag_name: v${{ github.event.inputs.version }}
+          release_name: Claude Desktop v${{ github.event.inputs.version }} ${{ github.event.inputs.release_type == 'development' && '(Development)' || '' }}
+          draft: false
+          prerelease: ${{ github.event.inputs.release_type == 'development' }}
+      
+      # Windows
+      - name: Upload Windows Installer
+        if: matrix.os == 'windows-latest' && github.event.inputs.release_type == 'production'
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./dist/prod/Claude-Desktop-Setup-${{ github.event.inputs.version }}.exe
+          asset_name: Claude-Desktop-Setup-${{ github.event.inputs.version }}.exe
+          asset_content_type: application/octet-stream
+      
+      # macOS
+      - name: Upload macOS Installer
+        if: matrix.os == 'macos-latest' && github.event.inputs.release_type == 'production'
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./dist/prod/Claude-Desktop-${{ github.event.inputs.version }}.dmg
+          asset_name: Claude-Desktop-${{ github.event.inputs.version }}.dmg
+          asset_content_type: application/octet-stream
+      
+      # Linux
+      - name: Upload Linux AppImage
+        if: matrix.os == 'ubuntu-latest' && github.event.inputs.release_type == 'production'
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./dist/prod/claude-desktop-${{ github.event.inputs.version }}.AppImage
+          asset_name: claude-desktop-${{ github.event.inputs.version }}.AppImage
+          asset_content_type: application/octet-stream
+      
+      # Upload the download.html and version.json to repo
+      - name: Commit download page and version file
+        if: matrix.os == 'ubuntu-latest' && github.event.inputs.release_type == 'production'
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add download.html version.json
+          git commit -m "Update download page and version info for v${{ github.event.inputs.version }}"
+          git push
