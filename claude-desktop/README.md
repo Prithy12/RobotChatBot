@@ -4,9 +4,9 @@ A cross-platform desktop chatbot application powered by Anthropic's Claude API. 
 
 ## Quick Download Links
 
-Download the source code: [Download ZIP](https://github.com/yourusername/claude-desktop/archive/refs/heads/main.zip)
+Download the source code: [Download ZIP](https://github.com/prithy12/RobotChatBot/archive/refs/heads/main.zip)
 
-Or visit our online download page (after enabling GitHub Pages): [https://yourusername.github.io/claude-desktop/](https://yourusername.github.io/claude-desktop/)
+Or visit our online download page (after enabling GitHub Pages): [https://prithy12.github.io/RobotChatBot/](https://prithy12.github.io/RobotChatBot/)
 
 ### Running From Source
 
@@ -25,7 +25,7 @@ To enable the one-click download website:
 3. Under "Source", select "main" branch and "/docs" folder
 4. Click "Save"
 5. Wait a few minutes for your site to be published
-6. Your download page will be available at: `https://yourusername.github.io/claude-desktop/`
+6. Your download page will be available at: `https://prithy12.github.io/RobotChatBot/`
 
 Once set up, you can use this link in your profile or share it directly with users.
 
@@ -50,14 +50,14 @@ Once set up, you can use this link in your profile or share it directly with use
 
 ### Download Pre-built Installers
 
-Pre-built installers for Windows, macOS, and Linux can be found on the [Releases](https://github.com/yourusername/claude-desktop/releases) page.
+Pre-built installers for Windows, macOS, and Linux can be found on the [Releases](https://github.com/prithy12/RobotChatBot/releases) page.
 
 ### Building from Source
 
 1. Clone the repository
    ```bash
-   git clone https://github.com/yourusername/claude-desktop.git
-   cd claude-desktop
+   git clone https://github.com/prithy12/RobotChatBot.git
+   cd RobotChatBot
    ```
 
 2. Install dependencies

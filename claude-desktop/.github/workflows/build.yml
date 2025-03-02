@@ -96,12 +96,16 @@ jobs:
           asset_name: claude-desktop-${{ github.event.inputs.version }}.AppImage
           asset_content_type: application/octet-stream
       
-      # Upload the download.html and version.json to repo
+      # Upload the download.html and version.json to repo and docs folder
       - name: Commit download page and version file
         if: matrix.os == 'ubuntu-latest' && github.event.inputs.release_type == 'production'
         run: |
+          # Copy files to docs directory
+          cp download.html docs/download.html
+          cp version.json docs/version.json
+          
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add download.html version.json
+          git add download.html version.json docs/download.html docs/version.json
           git commit -m "Update download page and version info for v${{ github.event.inputs.version }}"
           git push
