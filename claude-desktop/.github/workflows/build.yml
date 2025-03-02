@@ -103,6 +103,7 @@ jobs:
           # Copy files to docs directory
           cp download.html docs/download.html
           cp version.json docs/version.json
+          cp -r assets/* docs/assets/ 2>/dev/null || :  # Copy assets if they exist
           
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"

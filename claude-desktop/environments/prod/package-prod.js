@@ -186,15 +186,15 @@ function generateDownloadPage(prodDistFolder) {
         <p>Claude Desktop is available for Windows, macOS, and Linux. Select your operating system below to download the latest version.</p>
         
         <div class="download-buttons">
-            <a href="https://github.com/prithy12/RobotChatBot/releases/download/v${version}/${windowsFileName}" class="download-button" id="windows-download" data-version="${version}">
+            <a href="https://github.com/Prithy12/RobotChatBot/releases/download/v${version}/${windowsFileName}" class="download-button" id="windows-download" data-version="${version}">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Windows_logo_-_2012.svg" alt="Windows logo">
                 Windows
             </a>
-            <a href="https://github.com/prithy12/RobotChatBot/releases/download/v${version}/${macFileName}" class="download-button" id="mac-download" data-version="${version}">
+            <a href="https://github.com/Prithy12/RobotChatBot/releases/download/v${version}/${macFileName}" class="download-button" id="mac-download" data-version="${version}">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple logo">
                 macOS
             </a>
-            <a href="https://github.com/prithy12/RobotChatBot/releases/download/v${version}/${linuxFileName}" class="download-button" id="linux-download" data-version="${version}">
+            <a href="https://github.com/Prithy12/RobotChatBot/releases/download/v${version}/${linuxFileName}" class="download-button" id="linux-download" data-version="${version}">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/3/35/Tux.svg" alt="Linux logo">
                 Linux
             </a>
