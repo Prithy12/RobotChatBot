@@ -20,9 +20,9 @@ If you've downloaded the source code:
 
 To enable the one-click download website:
 
-1. Go to your GitHub repository settings
-2. Scroll down to the GitHub Pages section
-3. Under "Source", select "main" branch and "/docs" folder
+1. Go to your GitHub repository settings > Pages
+2. Under "Build and deployment" > "Source", select "Deploy from a branch"
+3. Under "Branch", select "main" branch and "/docs" folder
 4. Click "Save"
 5. Wait a few minutes for your site to be published
 6. Your download page will be available at: `https://Prithy12.github.io/RobotChatBot/`
