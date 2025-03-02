@@ -1,6 +1,6 @@
 @echo off
 echo ================================================
-echo Starting Claude Desktop in DEVELOPMENT mode
+echo Starting Claude Desktop in PRODUCTION mode
 echo ================================================
 echo.
 
@@ -28,9 +28,8 @@ if not exist dist\preload.bundle.js (
 
 :: Start the application
 echo.
-echo Launching Claude Desktop in development mode...
-echo Developer tools and debug menus will be available.
+echo Launching Claude Desktop...
 echo.
-call npm start
+call electron . --prod
 
 pause

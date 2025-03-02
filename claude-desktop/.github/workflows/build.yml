@@ -1,0 +1,48 @@
+name: Build and Release
+
+on:
+  push:
+    # Build on specific branches
+    branches: [main, dev, prod]
+    # Build on published releases
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    runs-on: ${{ matrix.os }}
+    
+    strategy:
+      matrix:
+        os: [windows-latest]  # You can add macos-latest and ubuntu-latest if needed
+    
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v3
+      
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm install
+      
+      - name: Build Webpack
+        run: npm run build
+      
+      - name: Build/release Electron app
+        uses: samuelmeuli/action-electron-builder@v1
+        with:
+          # GitHub token, automatically provided to the action
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          
+          # If the commit is tagged with a version (e.g. "v1.0.0"),
+          # release the app after building
+          release: ${{ startsWith(github.ref, 'refs/tags/v') }}
+          
+          # Use this if building for specific branch
+          args: |
+            ${{ github.ref == 'refs/heads/dev' && '--config.productName="Claude Desktop Dev"' || '' }}
+            ${{ github.ref == 'refs/heads/prod' && '--config.productName="Claude Desktop Prod"' || '' }}

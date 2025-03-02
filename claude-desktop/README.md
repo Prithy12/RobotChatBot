@@ -2,6 +2,33 @@
 
 A cross-platform desktop chatbot application powered by Anthropic's Claude API. Have conversations with Claude, with a modern and intuitive interface.
 
+## Quick Download Links
+
+Download the source code: [Download ZIP](https://github.com/yourusername/claude-desktop/archive/refs/heads/main.zip)
+
+Or visit our online download page (after enabling GitHub Pages): [https://yourusername.github.io/claude-desktop/](https://yourusername.github.io/claude-desktop/)
+
+### Running From Source
+
+If you've downloaded the source code:
+
+1. Go to either the `environments/prod` or `environments/dev` directory
+2. Run `start.cmd` - this will automatically install dependencies and start the application
+3. Each environment is completely self-contained and doesn't require files from the parent directory
+
+### Setting Up Download Page
+
+To enable the one-click download website:
+
+1. Go to your GitHub repository settings
+2. Scroll down to the GitHub Pages section
+3. Under "Source", select "main" branch and "/docs" folder
+4. Click "Save"
+5. Wait a few minutes for your site to be published
+6. Your download page will be available at: `https://yourusername.github.io/claude-desktop/`
+
+Once set up, you can use this link in your profile or share it directly with users.
+
 ![Claude Desktop Screenshot](assets/screenshot.png)
 
 ## Features

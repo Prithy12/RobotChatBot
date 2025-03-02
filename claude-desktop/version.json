@@ -1,0 +1,10 @@
+{
+  "version": "1.0.0",
+  "notes": "Initial release with support for both development and production environments",
+  "releaseDate": "2025-03-01",
+  "platforms": {
+    "windows": true,
+    "mac": true,
+    "linux": true
+  }
+}

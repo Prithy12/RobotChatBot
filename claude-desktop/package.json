@@ -1,0 +1,99 @@
+{
+  "name": "claude-desktop",
+  "productName": "Claude Desktop",
+  "version": "1.0.0",
+  "description": "Cross-platform desktop chatbot application using Claude API",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "build": "node scripts/build.js",
+    "setup-assets": "node scripts/setup-robot-assets.js",
+    "prebuild": "npm run setup-assets",
+    "build:preload": "webpack --config webpack.config.js",
+    "dev:preload": "webpack --config webpack.config.js --watch",
+    "prestart": "npm run build:preload",
+    "predev": "npm run build:preload",
+    "debug:preload": "node scripts/debug-preload.js",
+    "package-win": "npm run build:preload && electron-builder --win",
+    "package-mac": "npm run build:preload && electron-builder --mac",
+    "package-linux": "npm run build:preload && electron-builder --linux",
+    "package-all": "npm run build:preload && electron-builder -mwl",
+    "package-dev": "node environments/dev/package-dev.js",
+    "package-prod": "node environments/prod/package-prod.js",
+    "package-portable": "npm run build:preload && electron-builder --win portable",
+    "release": "electron-builder --publish always",
+    "rebuild": "electron-rebuild -f -w keytar",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "build": {
+    "appId": "com.claudedesktop.app",
+    "productName": "Claude Desktop",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "src/**/*",
+      "assets/**/*",
+      "node_modules/**/*",
+      "package.json"
+    ],
+    "asar": true,
+    "asarUnpack": [
+      "node_modules/keytar"
+    ],
+    "mac": {
+      "category": "public.app-category.productivity",
+      "icon": "assets/icons/mac/icon.icns"
+    },
+    "win": {
+      "icon": "assets/icons/win/icon.ico",
+      "target": [
+        "nsis",
+        "portable"
+      ],
+      "artifactName": "${productName}-Setup-${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "perMachine": false,
+      "deleteAppDataOnUninstall": true
+    },
+    "portable": {
+      "artifactName": "${productName}-Portable-${version}.${ext}"
+    },
+    "linux": {
+      "icon": "assets/icons/png",
+      "target": [
+        "AppImage",
+        "deb"
+      ]
+    },
+    "npmRebuild": true,
+    "publish": {
+      "provider": "github",
+      "releaseType": "release"
+    }
+  },
+  "author": "Your Name",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.26.9",
+    "@babel/preset-env": "^7.26.9",
+    "babel-loader": "^9.2.1",
+    "electron": "^28.1.0",
+    "electron-builder": "^24.6.4",
+    "electron-rebuild": "^3.2.9",
+    "webpack": "^5.98.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "axios": "^1.6.2",
+    "electron-store": "^8.1.0",
+    "electron-updater": "^6.1.7",
+    "keytar": "^7.9.0",
+    "marked": "^9.1.5",
+    "moment": "^2.29.4"
+  }
+}
