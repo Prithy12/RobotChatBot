@@ -15,7 +15,7 @@ This environment is configured for end users and demonstrations, featuring a rob
 Before running the application, you need to install the required dependencies:
 
 ```bash
-# Run this in the environments/prod directory
+# Run this in the prod directory
 npm install
 ```
 
@@ -32,7 +32,7 @@ This will install all dependencies required for the application to run.
 2. Navigate to the application directory
 3. Run `./start.sh`
    ```bash
-   cd /path/to/claude-desktop/environments/prod
+   cd /path/to/RobotChatBot/prod
    ./start.sh
    ```
 
@@ -50,7 +50,7 @@ If you want to demonstrate a fresh installation:
 2. Open Terminal and navigate to the application directory
 3. Run `./reset.sh`
    ```bash
-   cd /path/to/claude-desktop/environments/prod
+   cd /path/to/RobotChatBot/prod
    ./reset.sh
    ```
 
@@ -67,7 +67,7 @@ If you need to remove your Anthropic API key from the application:
 2. Open Terminal and navigate to the application directory
 3. Run `./clean-api-key.sh`
    ```bash
-   cd /path/to/claude-desktop/environments/prod
+   cd /path/to/RobotChatBot/prod
    ./clean-api-key.sh
    ```
 
@@ -83,7 +83,7 @@ To create a distributable package for production use:
 1. Open Terminal and navigate to the application directory
 2. Run `./package.sh`
    ```bash
-   cd /path/to/claude-desktop/environments/prod
+   cd /path/to/RobotChatBot/prod
    ./package.sh
    ```
 
