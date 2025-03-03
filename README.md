@@ -23,13 +23,13 @@ A cross-platform desktop chatbot application powered by Anthropic's Claude API. 
 
 ### Download Pre-built Installers
 
-Pre-built installers for Windows, macOS, and Linux can be found on the [Releases](https://github.com/yourusername/claude-desktop/releases) page.
+Pre-built installers for Windows, macOS, and Linux can be found on the [Releases](https://github.com/Prithy12/RobotChatBot/releases)page.
 
 ### Building from Source
 
 1. Clone the repository
    ```bash
-   git clone https://github.com/yourusername/claude-desktop.git
+   git clone https://github.com/Prithy12/claude-desktop.git
    cd claude-desktop
    ```
 
