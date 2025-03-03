@@ -1,4 +1,4 @@
-# Claude Desktop Robot - Production Environment
+# Your Desktop Robot 
 
 This environment is configured for end users and demonstrations, featuring a robot UI that interacts with Claude AI.
 
