@@ -318,14 +318,14 @@ function createMainWindow() {
   logToFile(LOG_LEVELS.INFO, 'Creating main application window');
   
   const win = new BrowserWindow({
-    width: 1000,
-    height: 800,
-    minWidth: 600,
-    minHeight: 500,
+    width: 1200,
+    height: 900,
+    minWidth: 800,
+    minHeight: 700,
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
-      preload: path.join(__dirname, '..', 'dist', 'preload.bundle.js'),
+      preload: path.join(__dirname, '../dist/preload.bundle.js'),
       devTools: isDev, // Only enable DevTools in development mode
       additionalArguments: [`--app-path=${__dirname}`], // Pass the app path to preload
       sandbox: false, // Disable sandbox to allow importing local modules

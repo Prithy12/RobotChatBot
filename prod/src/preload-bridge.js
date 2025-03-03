@@ -53,32 +53,25 @@ function setupRobotHandlers(logger) {
     return false;
   }
 
-  // Create a robot instance (stores in memory)
-  ipcMain.handle('robot-create', (event, data) => {
+  // Create a robot instance - simplified to avoid serialization issues
+  ipcMain.handle('robot-create', (event, options) => {
     try {
-      log(LOG_LEVELS.DEBUG, 'Robot create called with data', data);
+      log(LOG_LEVELS.DEBUG, 'Robot create called with options', options);
       
       // Validate input data
-      if (!data || typeof data !== 'object') {
-        throw new Error('Invalid robot creation data');
-      }
-      
-      const { containerId, options } = data;
-      
-      if (!containerId || typeof containerId !== 'string') {
-        throw new Error('Container ID must be a string');
-      }
-      
       if (!options || typeof options !== 'object') {
-        throw new Error('Robot options must be an object');
+        throw new Error('Invalid robot creation options');
       }
       
-      log(LOG_LEVELS.INFO, `Creating robot with container ID: ${containerId}`);
+      // Extract options from object if it's wrapped
+      const robotOptions = options.options || options;
       
-      // Clone the options to avoid mutations
-      const sanitizedOptions = JSON.parse(JSON.stringify(options));
+      // Validate required options
+      if (!robotOptions.apiKey) {
+        throw new Error('API key is required for robot creation');
+      }
       
-      log(LOG_LEVELS.DEBUG, 'Using sanitized options', sanitizedOptions);
+      log(LOG_LEVELS.INFO, 'Creating robot instance');
       
       // Store the created robots by ID for future access
       if (!global.robotInstances) {
@@ -88,7 +81,7 @@ function setupRobotHandlers(logger) {
       // Generate a unique instance ID
       const instanceId = `robot_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
       
-      // Store success response while we attempt to create the robot
+      // Store success response
       let response = { 
         success: true, 
         instanceId,
@@ -100,8 +93,7 @@ function setupRobotHandlers(logger) {
       // Store in global registry for future access
       global.robotInstances.set(instanceId, {
         id: instanceId,
-        containerId,
-        options: sanitizedOptions,
+        options: robotOptions,
         created: new Date().toISOString()
       });
       
@@ -122,7 +114,7 @@ function setupRobotHandlers(logger) {
       const face = new RobotFace(options);
       return { success: true, instanceId: face.id };
     } catch (error) {
-      logger(LOG_LEVELS.ERROR, 'Error creating robot face:', error);
+      log(LOG_LEVELS.ERROR, 'Error creating robot face:', error);
       return { success: false, error: error.message };
     }
   });
@@ -133,7 +125,7 @@ function setupRobotHandlers(logger) {
       const speech = new SpeechManager(options);
       return { success: true, instanceId: speech.id };
     } catch (error) {
-      logger(LOG_LEVELS.ERROR, 'Error creating speech manager:', error);
+      log(LOG_LEVELS.ERROR, 'Error creating speech manager:', error);
       return { success: false, error: error.message };
     }
   });
