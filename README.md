@@ -1,140 +1,61 @@
-# Your Desktop Robot 
+# ChatBot Web Application
 
-This environment is configured for end users and demonstrations, featuring a robot UI that interacts with Claude AI.
+A simple chatbot application with a React.js frontend and a FastAPI backend that uses OpenAI's GPT-3.5 API.
 
-## Features in Production Mode
+## Requirements
 
-- Interactive robot character with facial expressions and animations
-- Audio feedback and speech synthesis
-- Clean, distraction-free interface
-- Optimized for end-user experience
-- Cross-platform support (Windows and macOS)
+- Python 3.8+
+- Node.js 14+
+- npm 6+
 
-## Setup Instructions
+## Setup
 
-Before running the application, you need to install the required dependencies:
+### Backend Setup
 
-```bash
-# Run this in the prod directory
-npm install
-```
-
-This will install all dependencies required for the application to run.
-
-## Starting the Application
-
-### Windows
-1. Double-click `start.cmd` in this folder
-2. The application will start in production mode
-
-### macOS
-1. Open Terminal
-2. Navigate to the application directory
-3. Run `./start.sh`
+1. Install Python dependencies:
    ```bash
-   cd /path/to/RobotChatBot/prod
-   ./start.sh
+   pip install -r requirements.txt
    ```
 
-## Reset for Fresh Demo
-
-If you want to demonstrate a fresh installation:
-
-### Windows
-1. Close the application
-2. Run `reset.cmd` in this folder
-3. Start the application again
-
-### macOS
-1. Close the application
-2. Open Terminal and navigate to the application directory
-3. Run `./reset.sh`
-   ```bash
-   cd /path/to/RobotChatBot/prod
-   ./reset.sh
+2. Ensure your `.env` file contains your OpenAI API key:
+   ```
+   OPENAI_API_KEY=your_openai_api_key
    ```
 
-## Removing Your API Key
-
-If you need to remove your Anthropic API key from the application:
-
-### Windows
-1. Close the application
-2. Run `clean-api-key.cmd` in this folder
-
-### macOS
-1. Close the application
-2. Open Terminal and navigate to the application directory
-3. Run `./clean-api-key.sh`
+3. Start the backend server:
    ```bash
-   cd /path/to/RobotChatBot/prod
-   ./clean-api-key.sh
+   python app.py
+   ```
+   The API will be available at http://localhost:8000
+
+### Frontend Setup
+
+1. Navigate to the frontend directory:
+   ```bash
+   cd frontend
    ```
 
-## Packaging the Application
-
-To create a distributable package for production use:
-
-### Windows
-1. Double-click `package.cmd` in this folder
-2. The script will build and package the application
-
-### macOS
-1. Open Terminal and navigate to the application directory
-2. Run `./package.sh`
+2. Install Node.js dependencies:
    ```bash
-   cd /path/to/RobotChatBot/prod
-   ./package.sh
+   npm install
    ```
 
-The installer will be available in the `dist/prod` directory once packaging is complete.
+3. Start the React development server:
+   ```bash
+   npm start
+   ```
+   The frontend will be available at http://localhost:3000
 
-The production package:
-- Uses the standard app ID (`com.claudedesktop.app`)
-- Uses the standard product name (`Claude Desktop`)
-- Is optimized for performance and security
+## Usage
 
-## First-time Setup
+1. Open your browser and navigate to http://localhost:3000
+2. Type your message in the input box and press "Send"
+3. Wait for the AI to respond
+4. Continue the conversation as desired
 
-When starting fresh, you'll need to:
-1. Enter your Anthropic API key
-2. The application will generate a unique encryption key for this installation
-3. All settings will be at their defaults
+## Features
 
-## Available NPM Scripts
-
-- `npm run start` - Start in production mode
-- `npm run build:preload` - Build the preload script
-- `npm run package-prod` - Create a production package
-
-## Troubleshooting
-
-### Missing Dependencies
-
-If you encounter errors about missing modules, make sure you've installed all dependencies:
-
-```bash
-npm install electron electron-updater electron-store keytar
-```
-
-### Node.js Not Found
-
-If you see errors about 'node' not being recognized, make sure Node.js is installed and in your PATH.
-
-### macOS Permissions
-
-On macOS, you may need to grant permission for the application to:
-- Access the microphone (for speech input)
-- Access the keychain (for API key storage)
-
-### File Path Issues
-
-The application expects certain files to be in specific locations. If you see errors about missing files, check that all required files are in the correct locations.
-
-### Script Permission Errors on macOS
-
-If you get permission errors when trying to run the `.sh` scripts on macOS, make them executable:
-
-```bash
-chmod +x *.sh
-```
+- Real-time chat interface
+- Integration with OpenAI's GPT-3.5 API
+- Loading indicators for a better user experience
+- Responsive design that works on desktop and mobile devices

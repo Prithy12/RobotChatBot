@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SQLite Database Manager</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        .panel {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        .sql-input {
+            width: 100%;
+            height: 100px;
+            font-family: monospace;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .success {
+            color: green;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        #tableSelector {
+            padding: 8px;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        .file-input {
+            margin-bottom: 20px;
+        }
+        #dbPath {
+            font-family: monospace;
+            padding: 5px;
+            background-color: #f2f2f2;
+            border-radius: 3px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>SQLite Database Manager</h1>
+        
+        <div class="panel">
+            <h3>1. Select SQLite Database File</h3>
+            <p>Select your chatbot.db file from the data folder:</p>
+            <div class="file-input">
+                <input type="file" id="dbFile" accept=".db">
+            </div>
+            <div id="dbInfo"></div>
+        </div>
+        
+        <div class="panel">
+            <h3>2. Browse Tables</h3>
+            <div>
+                <select id="tableSelector" disabled>
+                    <option value="">--- Select a table ---</option>
+                </select>
+                <button id="browseTable" disabled>Browse</button>
+            </div>
+            <div id="tableContent"></div>
+        </div>
+        
+        <div class="panel">
+            <h3>3. Execute SQL Query</h3>
+            <textarea id="sqlQuery" class="sql-input" placeholder="Enter SQL query here..." disabled>SELECT * FROM sqlite_master WHERE type='table';</textarea>
+            <button id="executeQuery" disabled>Execute</button>
+            <div id="queryResult"></div>
+        </div>
+    </div>
+    
+    <script>
+        // Initialize SQL.js
+        const sqlPromise = initSqlJs({
+            locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/${file}`
+        });
+        
+        let db = null;
+        let tables = [];
+        
+        // Initialize the DB when file is selected
+        document.getElementById('dbFile').addEventListener('change', async function(e) {
+            const dbFile = e.target.files[0];
+            if (!dbFile) return;
+            
+            try {
+                const SQL = await sqlPromise;
+                const data = await dbFile.arrayBuffer();
+                db = new SQL.Database(new Uint8Array(data));
+                
+                document.getElementById('dbInfo').innerHTML = `
+                    <p class="success">Database loaded successfully!</p>
+                    <p>Path: <span id="dbPath">${dbFile.name}</span></p>
+                `;
+                
+                // Get tables
+                const tableResult = db.exec("SELECT name FROM sqlite_master WHERE type='table';");
+                if (tableResult.length > 0) {
+                    tables = tableResult[0].values.map(v => v[0]);
+                    
+                    // Populate table selector
+                    const tableSelector = document.getElementById('tableSelector');
+                    tableSelector.innerHTML = '<option value="">--- Select a table ---</option>';
+                    tables.forEach(table => {
+                        const option = document.createElement('option');
+                        option.value = table;
+                        option.textContent = table;
+                        tableSelector.appendChild(option);
+                    });
+                    
+                    tableSelector.disabled = false;
+                    document.getElementById('browseTable').disabled = false;
+                    document.getElementById('sqlQuery').disabled = false;
+                    document.getElementById('executeQuery').disabled = false;
+                    
+                    // Show tables in initial query
+                    executeQuery("SELECT name, sql FROM sqlite_master WHERE type='table';");
+                }
+            } catch (err) {
+                document.getElementById('dbInfo').innerHTML = `
+                    <p class="error">Error loading database: ${err.message}</p>
+                `;
+            }
+        });
+        
+        // Browse table
+        document.getElementById('browseTable').addEventListener('click', function() {
+            const table = document.getElementById('tableSelector').value;
+            if (!table) return;
+            
+            const query = `SELECT * FROM ${table} LIMIT 100;`;
+            document.getElementById('sqlQuery').value = query;
+            executeQuery(query);
+        });
+        
+        // Execute SQL query
+        document.getElementById('executeQuery').addEventListener('click', function() {
+            const query = document.getElementById('sqlQuery').value;
+            executeQuery(query);
+        });
+        
+        // Execute query and display results
+        function executeQuery(query) {
+            if (!db) return;
+            
+            try {
+                const start = performance.now();
+                const results = db.exec(query);
+                const end = performance.now();
+                
+                let html = `<p class="success">Query executed in ${(end - start).toFixed(2)} ms</p>`;
+                
+                if (results.length === 0) {
+                    html += '<p>Query executed successfully but returned no results.</p>';
+                } else {
+                    results.forEach(result => {
+                        html += '<table>';
+                        
+                        // Header
+                        html += '<tr>';
+                        result.columns.forEach(column => {
+                            html += `<th>${column}</th>`;
+                        });
+                        html += '</tr>';
+                        
+                        // Rows
+                        result.values.forEach(row => {
+                            html += '<tr>';
+                            row.forEach(cell => {
+                                // Format cell content
+                                let content = cell;
+                                if (typeof cell === 'string' && cell.length > 100) {
+                                    content = cell.substring(0, 100) + '...';
+                                }
+                                if (cell === null) content = 'NULL';
+                                
+                                html += `<td>${content}</td>`;
+                            });
+                            html += '</tr>';
+                        });
+                        
+                        html += '</table>';
+                    });
+                }
+                
+                document.getElementById('queryResult').innerHTML = html;
+            } catch (err) {
+                document.getElementById('queryResult').innerHTML = `
+                    <p class="error">Error executing query: ${err.message}</p>
+                `;
+            }
+        }
+    </script>
+</body>
+</html> 
